@@ -281,7 +281,7 @@
      border: 1.5px solid var(--border);
      border-radius: 8px;
      font-size: 13.5px;
-     font-family: 'DM Sans', sans-serif;
+     font-family: 'Inter', sans-serif;
      color: var(--navy);
      background: var(--off-white);
      font-weight: 500;
@@ -380,7 +380,7 @@
  .btn {
      padding: 12px 28px;
      border-radius: 10px;
-     font-family: 'DM Sans', sans-serif;
+     font-family: 'Inter', sans-serif;
      font-size: 14px;
      font-weight: 600;
      cursor: pointer;
