@@ -6,854 +6,786 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SpendSense — Indian Budget Calculator</title>
     <link
-            href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
-            rel="stylesheet">
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="header">
-    <div class="header-inner">
-        <div class="header-icon">💰</div>
-        <div class="header-text">
-            <h1>SpendSense — Personal Budget Calculator</h1>
-            <p>Track your income & expenses to discover where your money goes every month</p>
-        </div>
-    </div>
-</div>
-
-<div class="stepper">
-    <div class="stepper-inner">
-        <div class="step-tab active" id="tab1" onclick="goToPage(1)">
-            <div class="step-num">1</div>
-            <span>Income Sources</span>
-        </div>
-        <div class="step-tab" id="tab2" onclick="goToPage(2)">
-            <div class="step-num">2</div>
-            <span>Monthly Expenses</span>
-        </div>
-        <div class="step-tab" id="tab3" onclick="goToPage(3)">
-            <div class="step-num">3</div>
-            <span>Budget Summary</span>
-        </div>
-    </div>
-    <div class="progress-bar-wrap">
-        <div class="progress-bar" id="progressBar" style="width:33%"></div>
-    </div>
-</div>
-
-<div class="main">
-
-    <!-- ===== PAGE 1: INCOME ===== -->
-    <div class="page active" id="page1">
-        <div class="page-intro">
-            <div class="intro-emoji">💼</div>
-            <div class="page-intro-text">
-                <h2>Step 1: Your Income Sources</h2>
-                <p>Enter your monthly take-home income (after taxes). Include all sources — salary, freelance, rental
-                    income,
-                    etc. All amounts in Indian Rupees (₹).</p>
+    <div class="header">
+        <div class="header-inner">
+            <div class="header-icon"><i class="fa-solid fa-piggy-bank"></i></div>
+            <div class="header-text">
+                <h1>SpendSense — Personal Budget Calculator</h1>
+                <p>Track your income & expenses to discover where your money goes every month</p>
             </div>
-        </div>
-
-        <!-- Employment Income -->
-        <div class="section-card" id="inc-employment">
-            <div class="section-header" onclick="toggleSection('inc-employment')">
-                <div class="section-header-icon">🏢</div>
-                <h2>Employment & Business Income <small
-                        style="font-family:DM Sans;font-weight:400;font-size:13px;color:var(--text-muted)">(After
-                    Tax)</small>
-                </h2>
-                <span class="section-total" id="total-employment-monthly">₹0</span>
-                <svg class="toggle-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M6 9l6 6 6-6"/>
-                </svg>
-            </div>
-            <div class="section-body">
-                <div class="col-header-row">
-                    <div>Income Source</div>
-                    <div>Monthly (₹)</div>
-                    <div>Annual (₹)</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">Salary / Wages<span>Take-home after TDS/income tax</span></div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input income-field"
-                                                                                            data-section="employment"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual" id="annual-0-0">₹0</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">Bonus / Incentives<span>Performance bonus, annual increment payout</span>
-                    </div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input income-field"
-                                                                                            data-section="employment"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual" id="annual-0-1">₹0</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">Freelance / Consulting<span>Gig work, contract projects</span></div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input income-field"
-                                                                                            data-section="employment"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual" id="annual-0-2">₹0</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">Business Profits<span>Self-employment, shop, trade income</span></div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input income-field"
-                                                                                            data-section="employment"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual" id="annual-0-3">₹0</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">Pension / Gratuity<span>Government or private pension</span></div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input income-field"
-                                                                                            data-section="employment"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual" id="annual-0-4">₹0</div>
-                </div>
-                <div class="subtotal-row">
-                    <div>Employment Subtotal</div>
-                    <div><span id="sub-employment-monthly">₹0</span></div>
-                    <div><span id="sub-employment-annual">₹0</span></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Personal Income -->
-        <div class="section-card" id="inc-personal">
-            <div class="section-header" onclick="toggleSection('inc-personal')">
-                <div class="section-header-icon">💹</div>
-                <h2>Investment & Personal Income<small
-                        style="font-family:DM Sans;font-weight:400;font-size:13px;color:var(--text-muted)"> (After
-                    Tax)</small>
-                </h2>
-                <span class="section-total" id="total-personal-monthly">₹0</span>
-                <svg class="toggle-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M6 9l6 6 6-6"/>
-                </svg>
-            </div>
-            <div class="section-body">
-                <div class="col-header-row">
-                    <div>Income Source</div>
-                    <div>Monthly (₹)</div>
-                    <div>Annual (₹)</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">Rental Income<span>From flat, shop, or property rent</span></div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input income-field"
-                                                                                            data-section="personal"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual" id="annual-1-0">₹0</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">Mutual Fund / SIP Returns<span>Dividends from mutual funds</span></div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input income-field"
-                                                                                            data-section="personal"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual" id="annual-1-1">₹0</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">FD / RD Interest<span>Fixed deposit, recurring deposit interest</span>
-                    </div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input income-field"
-                                                                                            data-section="personal"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual" id="annual-1-2">₹0</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">Stock Dividends / Capital Gains<span>From shares & equity holdings</span>
-                    </div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input income-field"
-                                                                                            data-section="personal"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual" id="annual-1-3">₹0</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">Family Support / HUF Income<span>Amount received from family, HUF</span>
-                    </div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input income-field"
-                                                                                            data-section="personal"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual" id="annual-1-4">₹0</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">Other Income<span>Gifts, agricultural income, misc.</span></div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input income-field"
-                                                                                            data-section="personal"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual" id="annual-1-5">₹0</div>
-                </div>
-                <div class="subtotal-row">
-                    <div>Personal Income Subtotal</div>
-                    <div><span id="sub-personal-monthly">₹0</span></div>
-                    <div><span id="sub-personal-annual">₹0</span></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Total Income Bar -->
-        <div class="section-card">
-            <div class="subtotal-row" style="background:var(--navy);border-top:none;">
-                <div style="color:white;font-size:15px;">💰 Total Monthly Income</div>
-                <div style="font-size:16px;"><span id="total-income-monthly" style="color:var(--gold-light)">₹0</span>
-                </div>
-                <div style="font-size:16px;text-align:right;padding-right:20px;"><span id="total-income-annual"
-                                                                                       style="color:var(--gold-light)">₹0</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="btn-row">
-            <button class="btn btn-primary" onclick="goToPage(2)">Next: Add Expenses →</button>
         </div>
     </div>
 
-    <!-- ===== PAGE 2: EXPENSES ===== -->
-    <div class="page" id="page2">
-        <div class="page-intro">
-            <div class="intro-emoji">🏠</div>
-            <div class="page-intro-text">
-                <h2>Step 2: Your Monthly Expenses</h2>
-                <p>Enter all your regular monthly spending. Be as accurate as possible — this helps identify where
-                    savings are
-                    possible. All amounts in ₹/month.</p>
+    <div class="stepper">
+        <div class="stepper-inner">
+            <div class="step-tab active" id="tab1" onclick="goToPage(1)">
+                <div class="step-num">1</div>
+                <span>Income Sources</span>
+            </div>
+            <div class="step-tab" id="tab2" onclick="goToPage(2)">
+                <div class="step-num">2</div>
+                <span>Monthly Expenses</span>
+            </div>
+            <div class="step-tab" id="tab3" onclick="goToPage(3)">
+                <div class="step-num">3</div>
+                <span>Budget Summary</span>
             </div>
         </div>
-
-        <!-- Housing -->
-        <div class="section-card" id="exp-housing">
-            <div class="section-header" onclick="toggleSection('exp-housing')">
-                <div class="section-header-icon">🏠</div>
-                <h2>Housing & Utilities</h2>
-                <span class="section-total" id="total-housing-monthly">₹0</span>
-                <svg class="toggle-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M6 9l6 6 6-6"/>
-                </svg>
-            </div>
-            <div class="section-body">
-                <div class="col-header-row">
-                    <div>Expense Item</div>
-                    <div>Monthly (₹)</div>
-                    <div>Annual (₹)</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">Home Loan EMI / Rent<span>Monthly EMI or rent payment</span></div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input expense-field"
-                                                                                            data-section="housing"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual">₹0</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">Society / Maintenance
-                        Charges<span>Apartment maintenance, society fees</span></div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input expense-field"
-                                                                                            data-section="housing"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual">₹0</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">Electricity Bill<span>Power & lighting</span></div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input expense-field"
-                                                                                            data-section="housing"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual">₹0</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">Water / Piped Gas (LPG) Bill<span>PNG, LPG cylinders, water</span></div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input expense-field"
-                                                                                            data-section="housing"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual">₹0</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">Phone / Mobile / Internet / DTH<span>Broadband, recharge, cable TV</span>
-                    </div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input expense-field"
-                                                                                            data-section="housing"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual">₹0</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">Property Tax / Home Insurance<span>Municipal tax, home insurance</span>
-                    </div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input expense-field"
-                                                                                            data-section="housing"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual">₹0</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">Repairs & Home Maintenance<span>Plumbing, painting, appliance repair</span>
-                    </div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input expense-field"
-                                                                                            data-section="housing"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual">₹0</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">Domestic Help<span>Cook, maid, driver, watchman</span></div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input expense-field"
-                                                                                            data-section="housing"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual">₹0</div>
-                </div>
-                <div class="subtotal-row">
-                    <div>Housing Subtotal</div>
-                    <div><span id="sub-housing-monthly">₹0</span></div>
-                    <div><span id="sub-housing-annual">₹0</span></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Living -->
-        <div class="section-card" id="exp-living">
-            <div class="section-header" onclick="toggleSection('exp-living')">
-                <div class="section-header-icon">🛒</div>
-                <h2>Daily Living & Household</h2>
-                <span class="section-total" id="total-living-monthly">₹0</span>
-                <svg class="toggle-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M6 9l6 6 6-6"/>
-                </svg>
-            </div>
-            <div class="section-body">
-                <div class="col-header-row">
-                    <div>Expense Item</div>
-                    <div>Monthly (₹)</div>
-                    <div>Annual (₹)</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">Groceries & Vegetables<span>Sabzi, ration, kirana store</span></div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input expense-field"
-                                                                                            data-section="living"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual">₹0</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">Medical & Health<span>Doctor, medicine, pathology</span></div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input expense-field"
-                                                                                            data-section="living"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual">₹0</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">School / Tuition Fees<span>Children's education, coaching</span></div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input expense-field"
-                                                                                            data-section="living"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual">₹0</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">Clothing & Footwear<span>Clothes, dry cleaning</span></div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input expense-field"
-                                                                                            data-section="living"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual">₹0</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">Personal Care<span>Salon, toiletries, cosmetics</span></div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input expense-field"
-                                                                                            data-section="living"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual">₹0</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">Child Care / Creche<span>Day care, nanny for children</span></div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input expense-field"
-                                                                                            data-section="living"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual">₹0</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">Other Daily Expenses<span>Tea-stall, miscellaneous daily</span></div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input expense-field"
-                                                                                            data-section="living"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual">₹0</div>
-                </div>
-                <div class="subtotal-row">
-                    <div>Living Subtotal</div>
-                    <div><span id="sub-living-monthly">₹0</span></div>
-                    <div><span id="sub-living-annual">₹0</span></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Transport -->
-        <div class="section-card" id="exp-transport">
-            <div class="section-header" onclick="toggleSection('exp-transport')">
-                <div class="section-header-icon">🚗</div>
-                <h2>Transportation</h2>
-                <span class="section-total" id="total-transport-monthly">₹0</span>
-                <svg class="toggle-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M6 9l6 6 6-6"/>
-                </svg>
-            </div>
-            <div class="section-body">
-                <div class="col-header-row">
-                    <div>Expense Item</div>
-                    <div>Monthly (₹)</div>
-                    <div>Annual (₹)</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">Car / Two-Wheeler Loan EMI<span>Vehicle loan installment</span></div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input expense-field"
-                                                                                            data-section="transport"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual">₹0</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">Fuel (Petrol / Diesel / CNG)<span>Monthly fuel spend</span></div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input expense-field"
-                                                                                            data-section="transport"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual">₹0</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">Vehicle Insurance<span>Two-wheeler / car insurance</span></div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input expense-field"
-                                                                                            data-section="transport"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual">₹0</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">Vehicle Servicing & Repairs<span>Maintenance, tyres</span></div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input expense-field"
-                                                                                            data-section="transport"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual">₹0</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">Cab / Auto / Metro / Bus<span>Ola, Uber, Rapido, public transit</span>
-                    </div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input expense-field"
-                                                                                            data-section="transport"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual">₹0</div>
-                </div>
-                <div class="subtotal-row">
-                    <div>Transport Subtotal</div>
-                    <div><span id="sub-transport-monthly">₹0</span></div>
-                    <div><span id="sub-transport-annual">₹0</span></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Personal / Lifestyle -->
-        <div class="section-card" id="exp-lifestyle">
-            <div class="section-header" onclick="toggleSection('exp-lifestyle')">
-                <div class="section-header-icon">🎬</div>
-                <h2>Personal & Lifestyle</h2>
-                <span class="section-total" id="total-lifestyle-monthly">₹0</span>
-                <svg class="toggle-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M6 9l6 6 6-6"/>
-                </svg>
-            </div>
-            <div class="section-body">
-                <div class="col-header-row">
-                    <div>Expense Item</div>
-                    <div>Monthly (₹)</div>
-                    <div>Annual (₹)</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">Eating Out / Food Delivery<span>Zomato, Swiggy, restaurants</span></div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input expense-field"
-                                                                                            data-section="lifestyle"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual">₹0</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">OTT & Entertainment<span>Netflix, Hotstar, Prime, outings</span></div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input expense-field"
-                                                                                            data-section="lifestyle"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual">₹0</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">Vacations & Travel<span>Weekend trips, holidays</span></div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input expense-field"
-                                                                                            data-section="lifestyle"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual">₹0</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">Hobbies & Sports<span>Gym, cricket, music, gaming</span></div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input expense-field"
-                                                                                            data-section="lifestyle"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual">₹0</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">Festivals & Gifts<span>Diwali, Eid, birthdays, weddings</span></div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input expense-field"
-                                                                                            data-section="lifestyle"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual">₹0</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">Charitable Donations / Temple<span>NGO, mandir/masjid/church</span></div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input expense-field"
-                                                                                            data-section="lifestyle"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual">₹0</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">Club / Gym Memberships<span>Fitness centre, social clubs</span></div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input expense-field"
-                                                                                            data-section="lifestyle"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual">₹0</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">Other<span>Courses, newspapers, misc.</span></div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input expense-field"
-                                                                                            data-section="lifestyle"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual">₹0</div>
-                </div>
-                <div class="subtotal-row">
-                    <div>Lifestyle Subtotal</div>
-                    <div><span id="sub-lifestyle-monthly">₹0</span></div>
-                    <div><span id="sub-lifestyle-annual">₹0</span></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Financial Commitments -->
-        <div class="section-card" id="exp-financial">
-            <div class="section-header" onclick="toggleSection('exp-financial')">
-                <div class="section-header-icon">📊</div>
-                <h2>Financial Commitments & Savings</h2>
-                <span class="section-total" id="total-financial-monthly">₹0</span>
-                <svg class="toggle-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M6 9l6 6 6-6"/>
-                </svg>
-            </div>
-            <div class="section-body">
-                <div class="col-header-row">
-                    <div>Expense Item</div>
-                    <div>Monthly (₹)</div>
-                    <div>Annual (₹)</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">Personal Loan EMI<span>Bank or NBFC personal loan</span></div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input expense-field"
-                                                                                            data-section="financial"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual">₹0</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">Credit Card Payments<span>EMI or full card bill payment</span></div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input expense-field"
-                                                                                            data-section="financial"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual">₹0</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">SIP / Mutual Fund Investment<span>Monthly SIP contributions</span></div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input expense-field"
-                                                                                            data-section="financial"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual">₹0</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">PPF / NPS / EPF Contribution<span>Long-term retirement savings</span></div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input expense-field"
-                                                                                            data-section="financial"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual">₹0</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">Emergency / FD Savings<span>Contingency fund, fixed deposits</span></div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input expense-field"
-                                                                                            data-section="financial"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual">₹0</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">LIC / Term / Health
-                        Insurance<span>Life insurance, Mediclaim premiums</span></div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input expense-field"
-                                                                                            data-section="financial"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual">₹0</div>
-                </div>
-                <div class="field-row">
-                    <div class="field-label">Other EMIs / Commitments<span>Gold loan, chit fund, etc.</span></div>
-                    <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
-                                                                                            class="field-input expense-field"
-                                                                                            data-section="financial"
-                                                                                            min="0" placeholder="0"
-                                                                                            oninput="recalc()">
-                    </div>
-                    <div class="field-annual">₹0</div>
-                </div>
-                <div class="subtotal-row">
-                    <div>Financial Subtotal</div>
-                    <div><span id="sub-financial-monthly">₹0</span></div>
-                    <div><span id="sub-financial-annual">₹0</span></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Total Expenses Bar -->
-        <div class="section-card">
-            <div class="subtotal-row" style="background:var(--saffron);border-top:none;">
-                <div style="color:white;font-size:15px;">🧾 Total Monthly Expenses</div>
-                <div style="font-size:16px;"><span id="total-expense-monthly" style="color:white">₹0</span></div>
-                <div style="font-size:16px;text-align:right;padding-right:20px;"><span id="total-expense-annual"
-                                                                                       style="color:white">₹0</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="btn-row">
-            <button class="btn btn-secondary" onclick="goToPage(1)">← Back to Income</button>
-            <button class="btn btn-primary" onclick="goToPage(3)">View Budget Summary →</button>
+        <div class="progress-bar-wrap">
+            <div class="progress-bar" id="progressBar" style="width:33%"></div>
         </div>
     </div>
 
-    <!-- ===== PAGE 3: RESULT ===== -->
-    <div class="page" id="page3">
-        <div class="page-intro" style="background:linear-gradient(135deg,#0A1628,#1A4BD4);">
-            <div class="intro-emoji">📊</div>
-            <div class="page-intro-text">
-                <h2>Step 3: Your Budget Summary</h2>
-                <p>Here's a complete picture of your finances — income vs expenses, monthly and annually. Export your
-                    report
-                    below.</p>
-            </div>
-        </div>
+    <div class="main">
 
-        <!-- Balance Card -->
-        <div class="balance-big-card" id="balanceCard">
-            <div class="label">MONTHLY SURPLUS / DEFICIT</div>
-            <div class="amount" id="balanceAmount">₹0</div>
-            <div class="sub" id="balanceSub">Annual: ₹0</div>
-            <div><span class="balance-badge good" id="balanceBadge">✓ You have surplus funds this month</span></div>
-        </div>
-
-        <!-- Two-column result cards -->
-        <div class="result-grid">
-            <div class="result-card">
-                <div class="result-card-header rch-income">💼 Total Income</div>
-                <div class="result-card-body">
-                    <div class="result-row"><span class="label">Employment & Business</span><span class="value"
-                                                                                                  id="r-employment">₹0</span>
-                    </div>
-                    <div class="result-row"><span class="label">Investments & Personal</span><span class="value"
-                                                                                                   id="r-personal">₹0</span>
-                    </div>
-                    <div class="result-total"><span>Total Monthly Income</span><span id="r-total-income">₹0</span></div>
+        <!-- ===== PAGE 1: INCOME ===== -->
+        <div class="page active" id="page1">
+            <div class="page-intro">
+                <div class="intro-emoji"><i class="fa-solid fa-briefcase"></i></div>
+                <div class="page-intro-text">
+                    <h2>Step 1: Your Income Sources</h2>
+                    <p>Enter your monthly take-home income (after taxes). Include all sources — salary, freelance,
+                        rental
+                        income,
+                        etc. All amounts in Indian Rupees (₹).</p>
                 </div>
             </div>
-            <div class="result-card">
-                <div class="result-card-header rch-expense">🧾 Total Expenses</div>
-                <div class="result-card-body">
-                    <div class="result-row"><span class="label">Housing & Utilities</span><span class="value"
-                                                                                                id="r-housing">₹0</span>
+
+            <!-- Employment Income -->
+            <div class="section-card" id="inc-employment">
+                <div class="section-header" onclick="toggleSection('inc-employment')">
+                    <div class="section-header-icon"><i class="fa-solid fa-city"></i></div>
+                    <h2>Employment & Business Income <small
+                            style="font-family:Inter;font-weight:400;font-size:13px;color:var(--text-muted)">(After
+                            Tax)</small>
+                    </h2>
+                    <span class="section-total" id="total-employment-monthly">₹0</span>
+                    <svg class="toggle-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 9l6 6 6-6" />
+                    </svg>
+                </div>
+                <div class="section-body">
+                    <div class="col-header-row">
+                        <div>Income Source</div>
+                        <div>Monthly (₹)</div>
+                        <div>Annual (₹)</div>
                     </div>
-                    <div class="result-row"><span class="label">Daily Living</span><span class="value"
-                                                                                         id="r-living">₹0</span>
+                    <div class="field-row">
+                        <div class="field-label">Salary / Wages<span>Take-home after TDS/income tax</span></div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input income-field" data-section="employment" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual" id="annual-0-0">₹0</div>
                     </div>
-                    <div class="result-row"><span class="label">Transportation</span><span class="value"
-                                                                                           id="r-transport">₹0</span>
+                    <div class="field-row">
+                        <div class="field-label">Bonus / Incentives<span>Performance bonus, annual increment
+                                payout</span>
+                        </div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input income-field" data-section="employment" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual" id="annual-0-1">₹0</div>
                     </div>
-                    <div class="result-row"><span class="label">Personal & Lifestyle</span><span class="value"
-                                                                                                 id="r-lifestyle">₹0</span>
+                    <div class="field-row">
+                        <div class="field-label">Freelance / Consulting<span>Gig work, contract projects</span></div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input income-field" data-section="employment" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual" id="annual-0-2">₹0</div>
                     </div>
-                    <div class="result-row"><span class="label">Financial Commitments</span><span class="value"
-                                                                                                  id="r-financial">₹0</span>
+                    <div class="field-row">
+                        <div class="field-label">Business Profits<span>Self-employment, shop, trade income</span></div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input income-field" data-section="employment" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual" id="annual-0-3">₹0</div>
                     </div>
-                    <div class="result-total"><span>Total Monthly Expenses</span><span id="r-total-expense">₹0</span>
+                    <div class="field-row">
+                        <div class="field-label">Pension / Gratuity<span>Government or private pension</span></div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input income-field" data-section="employment" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual" id="annual-0-4">₹0</div>
+                    </div>
+                    <div class="subtotal-row">
+                        <div>Employment Subtotal</div>
+                        <div><span id="sub-employment-monthly">₹0</span></div>
+                        <div><span id="sub-employment-annual">₹0</span></div>
                     </div>
                 </div>
             </div>
+
+            <!-- Personal Income -->
+            <div class="section-card" id="inc-personal">
+                <div class="section-header" onclick="toggleSection('inc-personal')">
+                    <div class="section-header-icon"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                    <h2>Investment & Personal Income<small
+                            style="font-family:Inter;font-weight:400;font-size:13px;color:var(--text-muted)"> (After
+                            Tax)</small>
+                    </h2>
+                    <span class="section-total" id="total-personal-monthly">₹0</span>
+                    <svg class="toggle-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 9l6 6 6-6" />
+                    </svg>
+                </div>
+                <div class="section-body">
+                    <div class="col-header-row">
+                        <div>Income Source</div>
+                        <div>Monthly (₹)</div>
+                        <div>Annual (₹)</div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-label">Rental Income<span>From flat, shop, or property rent</span></div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input income-field" data-section="personal" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual" id="annual-1-0">₹0</div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-label">Mutual Fund / SIP Returns<span>Dividends from mutual funds</span></div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input income-field" data-section="personal" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual" id="annual-1-1">₹0</div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-label">FD / RD Interest<span>Fixed deposit, recurring deposit interest</span>
+                        </div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input income-field" data-section="personal" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual" id="annual-1-2">₹0</div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-label">Stock Dividends / Capital Gains<span>From shares & equity
+                                holdings</span>
+                        </div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input income-field" data-section="personal" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual" id="annual-1-3">₹0</div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-label">Family Support / HUF Income<span>Amount received from family,
+                                HUF</span>
+                        </div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input income-field" data-section="personal" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual" id="annual-1-4">₹0</div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-label">Other Income<span>Gifts, agricultural income, misc.</span></div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input income-field" data-section="personal" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual" id="annual-1-5">₹0</div>
+                    </div>
+                    <div class="subtotal-row">
+                        <div>Personal Income Subtotal</div>
+                        <div><span id="sub-personal-monthly">₹0</span></div>
+                        <div><span id="sub-personal-annual">₹0</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total Income Bar -->
+            <div class="section-card">
+                <div class="subtotal-row" style="background:var(--navy);border-top:none;">
+                    <div style="color:white;font-size:15px;"><i class="fa-solid fa-sack-dollar"></i> Total Monthly Income</div>
+                    <div style="font-size:16px;"><span id="total-income-monthly"
+                            style="color:var(--gold-light)">₹0</span>
+                    </div>
+                    <div style="font-size:16px;text-align:right;padding-right:20px;"><span id="total-income-annual"
+                            style="color:var(--gold-light)">₹0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="btn-row">
+                <button class="btn btn-primary" onclick="goToPage(2)">Next: Add Expenses <i class="fa-solid fa-arrow-right-long"></i></button>
+            </div>
         </div>
 
-        <!-- Detailed Breakdown Table -->
-        <div class="section-card" style="margin-bottom:24px;">
-            <div class="section-header" style="cursor:default;background:linear-gradient(to right,#E6F0FF,transparent)">
-                <div class="section-header-icon" style="background:var(--blue-accent)">📋</div>
-                <h2 style="color:var(--navy)">Complete Monthly & Annual Breakdown</h2>
+        <!-- ===== PAGE 2: EXPENSES ===== -->
+        <div class="page" id="page2">
+            <div class="page-intro">
+                <div class="intro-emoji"><i class="fa-solid fa-house-chimney-crack"></i></div>
+                <div class="page-intro-text">
+                    <h2>Step 2: Your Monthly Expenses</h2>
+                    <p>Enter all your regular monthly spending. Be as accurate as possible — this helps identify where
+                        savings are
+                        possible. All amounts in ₹/month.</p>
+                </div>
             </div>
-            <div style="padding:20px;overflow-x:auto;">
-                <table class="breakdown-table" id="breakdownTable">
-                    <thead>
-                    <tr>
-                        <th>Category</th>
-                        <th style="text-align:right">Monthly (₹)</th>
-                        <th style="text-align:right">Annual (₹)</th>
-                        <th style="text-align:right">% of Income</th>
-                    </tr>
-                    </thead>
-                    <tbody id="breakdownBody"></tbody>
-                </table>
+
+            <!-- Housing -->
+            <div class="section-card" id="exp-housing">
+                <div class="section-header" onclick="toggleSection('exp-housing')">
+                    <div class="section-header-icon"><i class="fa-solid fa-house-chimney"></i></div>
+                    <h2>Housing & Utilities</h2>
+                    <span class="section-total" id="total-housing-monthly">₹0</span>
+                    <svg class="toggle-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 9l6 6 6-6" />
+                    </svg>
+                </div>
+                <div class="section-body">
+                    <div class="col-header-row">
+                        <div>Expense Item</div>
+                        <div>Monthly (₹)</div>
+                        <div>Annual (₹)</div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-label">Home Loan EMI / Rent<span>Monthly EMI or rent payment</span></div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input expense-field" data-section="housing" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual">₹0</div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-label">Society / Maintenance
+                            Charges<span>Apartment maintenance, society fees</span></div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input expense-field" data-section="housing" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual">₹0</div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-label">Electricity Bill<span>Power & lighting</span></div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input expense-field" data-section="housing" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual">₹0</div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-label">Water / Piped Gas (LPG) Bill<span>PNG, LPG cylinders, water</span>
+                        </div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input expense-field" data-section="housing" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual">₹0</div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-label">Phone / Mobile / Internet / DTH<span>Broadband, recharge, cable
+                                TV</span>
+                        </div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input expense-field" data-section="housing" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual">₹0</div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-label">Property Tax / Home Insurance<span>Municipal tax, home insurance</span>
+                        </div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input expense-field" data-section="housing" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual">₹0</div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-label">Repairs & Home Maintenance<span>Plumbing, painting, appliance
+                                repair</span>
+                        </div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input expense-field" data-section="housing" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual">₹0</div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-label">Domestic Help<span>Cook, maid, driver, watchman</span></div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input expense-field" data-section="housing" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual">₹0</div>
+                    </div>
+                    <div class="subtotal-row">
+                        <div>Housing Subtotal</div>
+                        <div><span id="sub-housing-monthly">₹0</span></div>
+                        <div><span id="sub-housing-annual">₹0</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Living -->
+            <div class="section-card" id="exp-living">
+                <div class="section-header" onclick="toggleSection('exp-living')">
+                    <div class="section-header-icon"><i class="fa-solid fa-cart-shopping"></i></div>
+                    <h2>Daily Living & Household</h2>
+                    <span class="section-total" id="total-living-monthly">₹0</span>
+                    <svg class="toggle-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 9l6 6 6-6" />
+                    </svg>
+                </div>
+                <div class="section-body">
+                    <div class="col-header-row">
+                        <div>Expense Item</div>
+                        <div>Monthly (₹)</div>
+                        <div>Annual (₹)</div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-label">Groceries & Vegetables<span>Sabzi, ration, kirana store</span></div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input expense-field" data-section="living" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual">₹0</div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-label">Medical & Health<span>Doctor, medicine, pathology</span></div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input expense-field" data-section="living" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual">₹0</div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-label">School / Tuition Fees<span>Children's education, coaching</span></div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input expense-field" data-section="living" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual">₹0</div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-label">Clothing & Footwear<span>Clothes, dry cleaning</span></div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input expense-field" data-section="living" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual">₹0</div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-label">Personal Care<span>Salon, toiletries, cosmetics</span></div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input expense-field" data-section="living" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual">₹0</div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-label">Child Care / Creche<span>Day care, nanny for children</span></div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input expense-field" data-section="living" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual">₹0</div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-label">Other Daily Expenses<span>Tea-stall, miscellaneous daily</span></div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input expense-field" data-section="living" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual">₹0</div>
+                    </div>
+                    <div class="subtotal-row">
+                        <div>Living Subtotal</div>
+                        <div><span id="sub-living-monthly">₹0</span></div>
+                        <div><span id="sub-living-annual">₹0</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Transport -->
+            <div class="section-card" id="exp-transport">
+                <div class="section-header" onclick="toggleSection('exp-transport')">
+                    <div class="section-header-icon"><i class="fa-solid fa-car-side"></i></div>
+                    <h2>Transportation</h2>
+                    <span class="section-total" id="total-transport-monthly">₹0</span>
+                    <svg class="toggle-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 9l6 6 6-6" />
+                    </svg>
+                </div>
+                <div class="section-body">
+                    <div class="col-header-row">
+                        <div>Expense Item</div>
+                        <div>Monthly (₹)</div>
+                        <div>Annual (₹)</div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-label">Car / Two-Wheeler Loan EMI<span>Vehicle loan installment</span></div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input expense-field" data-section="transport" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual">₹0</div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-label">Fuel (Petrol / Diesel / CNG)<span>Monthly fuel spend</span></div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input expense-field" data-section="transport" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual">₹0</div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-label">Vehicle Insurance<span>Two-wheeler / car insurance</span></div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input expense-field" data-section="transport" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual">₹0</div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-label">Vehicle Servicing & Repairs<span>Maintenance, tyres</span></div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input expense-field" data-section="transport" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual">₹0</div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-label">Cab / Auto / Metro / Bus<span>Ola, Uber, Rapido, public transit</span>
+                        </div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input expense-field" data-section="transport" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual">₹0</div>
+                    </div>
+                    <div class="subtotal-row">
+                        <div>Transport Subtotal</div>
+                        <div><span id="sub-transport-monthly">₹0</span></div>
+                        <div><span id="sub-transport-annual">₹0</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Personal / Lifestyle -->
+            <div class="section-card" id="exp-lifestyle">
+                <div class="section-header" onclick="toggleSection('exp-lifestyle')">
+                    <div class="section-header-icon"><i class="fa-solid fa-clapperboard"></i></div>
+                    <h2>Personal & Lifestyle</h2>
+                    <span class="section-total" id="total-lifestyle-monthly">₹0</span>
+                    <svg class="toggle-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 9l6 6 6-6" />
+                    </svg>
+                </div>
+                <div class="section-body">
+                    <div class="col-header-row">
+                        <div>Expense Item</div>
+                        <div>Monthly (₹)</div>
+                        <div>Annual (₹)</div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-label">Eating Out / Food Delivery<span>Zomato, Swiggy, restaurants</span>
+                        </div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input expense-field" data-section="lifestyle" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual">₹0</div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-label">OTT & Entertainment<span>Netflix, Hotstar, Prime, outings</span></div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input expense-field" data-section="lifestyle" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual">₹0</div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-label">Vacations & Travel<span>Weekend trips, holidays</span></div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input expense-field" data-section="lifestyle" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual">₹0</div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-label">Hobbies & Sports<span>Gym, cricket, music, gaming</span></div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input expense-field" data-section="lifestyle" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual">₹0</div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-label">Festivals & Gifts<span>Diwali, Eid, birthdays, weddings</span></div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input expense-field" data-section="lifestyle" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual">₹0</div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-label">Charitable Donations / Temple<span>NGO, mandir/masjid/church</span>
+                        </div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input expense-field" data-section="lifestyle" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual">₹0</div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-label">Club / Gym Memberships<span>Fitness centre, social clubs</span></div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input expense-field" data-section="lifestyle" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual">₹0</div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-label">Other<span>Courses, newspapers, misc.</span></div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input expense-field" data-section="lifestyle" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual">₹0</div>
+                    </div>
+                    <div class="subtotal-row">
+                        <div>Lifestyle Subtotal</div>
+                        <div><span id="sub-lifestyle-monthly">₹0</span></div>
+                        <div><span id="sub-lifestyle-annual">₹0</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Financial Commitments -->
+            <div class="section-card" id="exp-financial">
+                <div class="section-header" onclick="toggleSection('exp-financial')">
+                    <div class="section-header-icon"><i class="fa-solid fa-chart-column"></i></div>
+                    <h2>Financial Commitments & Savings</h2>
+                    <span class="section-total" id="total-financial-monthly">₹0</span>
+                    <svg class="toggle-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 9l6 6 6-6" />
+                    </svg>
+                </div>
+                <div class="section-body">
+                    <div class="col-header-row">
+                        <div>Expense Item</div>
+                        <div>Monthly (₹)</div>
+                        <div>Annual (₹)</div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-label">Personal Loan EMI<span>Bank or NBFC personal loan</span></div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input expense-field" data-section="financial" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual">₹0</div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-label">Credit Card Payments<span>EMI or full card bill payment</span></div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input expense-field" data-section="financial" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual">₹0</div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-label">SIP / Mutual Fund Investment<span>Monthly SIP contributions</span>
+                        </div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input expense-field" data-section="financial" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual">₹0</div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-label">PPF / NPS / EPF Contribution<span>Long-term retirement savings</span>
+                        </div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input expense-field" data-section="financial" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual">₹0</div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-label">Emergency / FD Savings<span>Contingency fund, fixed deposits</span>
+                        </div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input expense-field" data-section="financial" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual">₹0</div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-label">LIC / Term / Health
+                            Insurance<span>Life insurance, Mediclaim premiums</span></div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input expense-field" data-section="financial" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual">₹0</div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-label">Other EMIs / Commitments<span>Gold loan, chit fund, etc.</span></div>
+                        <div class="field-input-wrap"><span class="currency-sym">₹</span><input type="number"
+                                class="field-input expense-field" data-section="financial" min="0" placeholder="0"
+                                oninput="recalc()">
+                        </div>
+                        <div class="field-annual">₹0</div>
+                    </div>
+                    <div class="subtotal-row">
+                        <div>Financial Subtotal</div>
+                        <div><span id="sub-financial-monthly">₹0</span></div>
+                        <div><span id="sub-financial-annual">₹0</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total Expenses Bar -->
+            <div class="section-card">
+                <div class="subtotal-row" style="background:var(--saffron);border-top:none;">
+                    <div style="color:white;font-size:15px;"><i class="fa-solid fa-file-lines"></i> Total Monthly
+                        Expenses</div>
+                    <div style="font-size:16px;"><span id="total-expense-monthly" style="color:white">₹0</span></div>
+                    <div style="font-size:16px;text-align:right;padding-right:20px;"><span id="total-expense-annual"
+                            style="color:white">₹0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="btn-row">
+                <button class="btn btn-secondary" onclick="goToPage(1)"><i class="fa-solid fa-arrow-left-long"></i> Back to Income</button>
+                <button class="btn btn-primary" onclick="goToPage(3)">View Budget Summary <i class="fa-solid fa-arrow-right-long"></i></button>
             </div>
         </div>
 
-        <!-- Smart Insights -->
-        <div class="insight-box" id="insightBox">
-            <h3>💡 Smart Budget Insights</h3>
-            <div id="insightsList"></div>
+        <!-- ===== PAGE 3: RESULT ===== -->
+        <div class="page" id="page3">
+            <div class="page-intro" style="background:linear-gradient(135deg,#0A1628,#1A4BD4);">
+                <div class="intro-emoji"><i class="fa-solid fa-chart-column"></i></div>
+                <div class="page-intro-text">
+                    <h2>Step 3: Your Budget Summary</h2>
+                    <p>Here's a complete picture of your finances — income vs expenses, monthly and annually. Export
+                        your
+                        report
+                        below.</p>
+                </div>
+            </div>
+
+            <!-- Balance Card -->
+            <div class="balance-big-card" id="balanceCard">
+                <div class="label">MONTHLY SURPLUS / DEFICIT</div>
+                <div class="amount" id="balanceAmount">₹0</div>
+                <div class="sub" id="balanceSub">Annual: ₹0</div>
+                <div><span class="balance-badge good" id="balanceBadge"><i class="fa-solid fa-check"></i> You have surplus funds this month</span></div>
+            </div>
+
+            <!-- Two-column result cards -->
+            <div class="result-grid">
+                <div class="result-card">
+                    <div class="result-card-header rch-income"><i class="fa-solid fa-briefcase"></i> Total Income</div>
+                    <div class="result-card-body">
+                        <div class="result-row"><span class="label">Employment & Business</span><span class="value"
+                                id="r-employment">₹0</span>
+                        </div>
+                        <div class="result-row"><span class="label">Investments & Personal</span><span class="value"
+                                id="r-personal">₹0</span>
+                        </div>
+                        <div class="result-total"><span>Total Monthly Income</span><span id="r-total-income">₹0</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="result-card">
+                    <div class="result-card-header rch-expense"><i class="fa-solid fa-file-lines"></i> Total Expenses
+                    </div>
+                    <div class="result-card-body">
+                        <div class="result-row"><span class="label">Housing & Utilities</span><span class="value"
+                                id="r-housing">₹0</span>
+                        </div>
+                        <div class="result-row"><span class="label">Daily Living</span><span class="value"
+                                id="r-living">₹0</span>
+                        </div>
+                        <div class="result-row"><span class="label">Transportation</span><span class="value"
+                                id="r-transport">₹0</span>
+                        </div>
+                        <div class="result-row"><span class="label">Personal & Lifestyle</span><span class="value"
+                                id="r-lifestyle">₹0</span>
+                        </div>
+                        <div class="result-row"><span class="label">Financial Commitments</span><span class="value"
+                                id="r-financial">₹0</span>
+                        </div>
+                        <div class="result-total"><span>Total Monthly Expenses</span><span
+                                id="r-total-expense">₹0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Breakdown Table -->
+            <div class="section-card" style="margin-bottom:24px;">
+                <div class="section-header"
+                    style="cursor:default;background:linear-gradient(to right,#E6F0FF,transparent)">
+                    <div class="section-header-icon" style="background:var(--blue-accent)"><i
+                            class="fa-solid fa-newspaper"></i></div>
+                    <h2 style="color:var(--navy)">Complete Monthly & Annual Breakdown</h2>
+                </div>
+                <div style="padding:20px;overflow-x:auto;">
+                    <table class="breakdown-table" id="breakdownTable">
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th style="text-align:right">Monthly (₹)</th>
+                                <th style="text-align:right">Annual (₹)</th>
+                                <th style="text-align:right">% of Income</th>
+                            </tr>
+                        </thead>
+                        <tbody id="breakdownBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Smart Insights -->
+            <div class="insight-box" id="insightBox">
+                <h3>💡 Smart Budget Insights</h3>
+                <div id="insightsList"></div>
+            </div>
+
+            <!-- Export bar -->
+            <div class="export-bar">
+                <div class="export-bar-text">
+                    <h3><i class="fa-solid fa-file-arrow-down"></i> Download Your Budget Report</h3>
+                    <p>Get a detailed Word document or Excel spreadsheet of your budget</p>
+                </div>
+                <div class="export-btns">
+                    <button class="btn btn-blue" onclick="exportWord()"><i class="fa-solid fa-file-word"></i> Export
+                        Word (.docx)</button>
+                    <button class="btn btn-green" onclick="exportExcel()"><i class="fa-solid fa-file-invoice"></i>
+                        Export Excel (.xlsx)</button>
+                </div>
+            </div>
+
+            <div class="btn-row">
+                <button class="btn btn-secondary" onclick="goToPage(2)"><i class="fa-solid fa-arrow-left-long"></i> Edit Expenses</button>
+                <button class="btn btn-secondary" onclick="resetAll()"><i class="fa-solid fa-arrows-rotate"></i> Start Over</button>
+            </div>
         </div>
 
-        <!-- Export bar -->
-        <div class="export-bar">
-            <div class="export-bar-text">
-                <h3>📥 Download Your Budget Report</h3>
-                <p>Get a detailed Word document or Excel spreadsheet of your budget</p>
-            </div>
-            <div class="export-btns">
-                <button class="btn btn-blue" onclick="exportWord()">📄 Export Word (.docx)</button>
-                <button class="btn btn-green" onclick="exportExcel()">📊 Export Excel (.xlsx)</button>
-            </div>
-        </div>
-
-        <div class="btn-row">
-            <button class="btn btn-secondary" onclick="goToPage(2)">← Edit Expenses</button>
-            <button class="btn btn-secondary" onclick="resetAll()">🔄 Start Over</button>
-        </div>
     </div>
-
-</div>
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>
